@@ -3,6 +3,8 @@
 Contains source code for database project and documentation on how to migrate from framework based project to SDK based project.
 This SQL Database project can be developed, built and published from windows, linux, osx or Docker container.
 
+![banner](images/banner.png)
+
 ## Install SQL project templates
 
 ```bash
