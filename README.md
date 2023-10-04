@@ -17,6 +17,21 @@ dotnet new install Microsoft.Build.Sql.Templates
 dotnet new sqlproj -n Database.DacFx
 ```
 
+> If you are planning to keep both projects for any reason, copy database objects (.sql) scripts from existing project to new project
+
+# Add new objects (optional)
+
+You can create new objects as plain `.sql` scripts and put it anywhere in the new project.
+
+For example, here's `Tables/User.sql` script to create User table.
+
+```sql
+CREATE TABLE [dbo].[User](
+    [UserId] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [Name] [varchar](50) NOT NULL
+);
+```
+
 ## Build dacpac
 
 ```bash
