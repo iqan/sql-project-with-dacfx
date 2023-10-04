@@ -1,6 +1,7 @@
-# SQL project with DacFx
+# Cross-platform SQL project with DacFx
 
 Contains source code for database project and documentation on how to migrate from framework based project to SDK based project.
+This SQL Database project can be developed, built and published from windows, linux, osx or Docker container.
 
 ## Install SQL project templates
 
