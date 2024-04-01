@@ -1,4 +1,4 @@
-timeout=20
+timeout=40
 echo "Setting Environment variables."
 export ACCEPT_EULA=Y
 export MSSQL_SA_PASSWORD=SuperSecretPassword#1
