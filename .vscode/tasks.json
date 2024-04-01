@@ -1,0 +1,94 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "clean (database)",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/Database.DacFx"
+      }
+    },
+    {
+      "label": "build (database)",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "clean (database)",
+      "group": {
+        "kind": "build"
+      },
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/Database.DacFx"
+      }
+    },
+    {
+      "label": "publish (database)",
+      "command": "SqlPackage",
+      "args": [
+        "/Action:Publish",
+        "/SourceFile:bin/Debug/Database.DacFx.dacpac",
+        "/TargetServerName:localhost",
+        "/TargetDatabaseName:Database.DacFx",
+        "/TargetTrustServerCertificate:True"
+      ],
+      "type": "process",
+      "dependsOn": "build (database)",
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/Database.DacFx"
+      }
+    },
+    {
+      "label": "build  docker image (database)",
+      "type": "docker-build",
+      "dockerBuild": {
+        "context": "${workspaceFolder}",
+        "dockerfile": "${workspaceFolder}/Dockerfile",
+        "tag": "db:local",
+        "target": "server"
+      }
+    },
+    {
+      "label": "run docker container (database)",
+      "type": "docker-run",
+      "dependsOn": "build  docker image (database)",
+      "dockerRun": {
+        "env": {
+          "ACCEPT_EULA": "Y",
+          "SA_PASSWORD": "SuperSecretPassword#1"
+        },
+        "ports": [
+          {
+            "hostPort": 1434, // This is to avoid port conflict with the local SQL Server instance
+            "containerPort": 1433
+          }
+        ],
+        "image": "db:local",
+        "containerName": "db",
+        "remove": true
+      }
+    },
+    {
+      "label": "Run unit tests in docker (database)",
+      "type": "docker-build",
+      "dockerBuild": {
+        "context": "${workspaceFolder}",
+        "dockerfile": "${workspaceFolder}/Dockerfile",
+        "tag": "db-tests:local",
+        "target": "test"
+      }
+    }
+  ]
+}

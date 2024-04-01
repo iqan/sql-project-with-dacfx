@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Todo]
+(
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY,
+    [Description] VARCHAR(50) NOT NULL,
+    [Completed] BIT NOT NULL DEFAULT 0,
+    [DateModified] DATETIME2 NOT NULL DEFAULT GETUTCDATE()
+)
