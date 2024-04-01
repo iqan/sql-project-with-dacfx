@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "clean (database)",
+      "label": "clean database",
       "command": "dotnet",
       "args": [
         "clean",
@@ -16,7 +16,7 @@
       }
     },
     {
-      "label": "build (database)",
+      "label": "build database",
       "command": "dotnet",
       "args": [
         "build",
@@ -24,7 +24,7 @@
         "/consoleloggerparameters:NoSummary"
       ],
       "type": "process",
-      "dependsOn": "clean (database)",
+      "dependsOn": "clean database",
       "group": {
         "kind": "build"
       },
@@ -34,7 +34,7 @@
       }
     },
     {
-      "label": "publish (database)",
+      "label": "publish database",
       "command": "SqlPackage",
       "args": [
         "/Action:Publish",
@@ -44,14 +44,14 @@
         "/TargetTrustServerCertificate:True"
       ],
       "type": "process",
-      "dependsOn": "build (database)",
+      "dependsOn": "build database",
       "problemMatcher": "$msCompile",
       "options": {
         "cwd": "${workspaceFolder}/Database.DacFx"
       }
     },
     {
-      "label": "build  docker image (database)",
+      "label": "build  docker image database",
       "type": "docker-build",
       "dockerBuild": {
         "context": "${workspaceFolder}",
@@ -61,9 +61,9 @@
       }
     },
     {
-      "label": "run docker container (database)",
+      "label": "Run database in docker container",
       "type": "docker-run",
-      "dependsOn": "build  docker image (database)",
+      "dependsOn": "build  docker image database",
       "dockerRun": {
         "env": {
           "ACCEPT_EULA": "Y",
@@ -81,7 +81,7 @@
       }
     },
     {
-      "label": "Run unit tests in docker (database)",
+      "label": "Run database unit tests in docker container",
       "type": "docker-build",
       "dockerBuild": {
         "context": "${workspaceFolder}",

@@ -32,6 +32,18 @@ CREATE TABLE [dbo].[User](
 );
 ```
 
+# VS Code Tasks
+
+VS Code tasks are configured to build database, publish database and run unit tests.
+
+| Task | Description |
+| --- | --- |
+| clean database | clean bin and obj folders
+| build database | build database project and produces dacpac
+| publish database | uses dacpac produced from build to deploy on localhost
+| Run database in docker container | builds docker image with ready to use database
+| Run database unit tests in docker container | runs database unit tests using docker
+
 ## Build dacpac
 
 ```bash
