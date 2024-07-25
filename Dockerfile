@@ -7,7 +7,7 @@ COPY init-db.sh .
 # RUN sed -i -r "s/Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider/Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider/g" CustomsClearance.sqlproj
 RUN dotnet build
 
-FROM mcr.microsoft.com/mssql/server:2022-latest AS server
+FROM mcr.microsoft.com/mssql/server:2022-CU13-ubuntu-22.04 AS server
 LABEL maintainer="Iqan Shaikh"
 WORKDIR /db
 COPY --from=build /src/bin/Debug/Database.DacFx_Create.sql .
